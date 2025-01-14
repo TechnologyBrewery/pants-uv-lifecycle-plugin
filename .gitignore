@@ -1,0 +1,7 @@
+# Pants workspace files
+/.pants.d
+/dist/
+__pycache__/
+.venv/
+.DS_Store
+*.lock

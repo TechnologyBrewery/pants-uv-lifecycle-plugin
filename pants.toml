@@ -1,0 +1,38 @@
+[GLOBAL]
+pants_version = "2.23.0"
+pythonpath=["%(buildroot)s/src"]
+backend_packages = [
+    # This will activate `src/pants-uv-lifecycle-plugin/register.py`.
+    "pants_uv_lifecycle_plugin",
+    
+    # This will build the custom plugin code
+    "pants.backend.python",
+
+    # This will lint, format, and test the custom plugin code
+    "pants.backend.plugin_development",
+   
+]
+
+[source]
+root_patterns = [
+    "src",
+    "tests"
+]
+
+[python]
+enable_resolves = true
+interpreter_constraints = [ ">=3.9"]
+default_resolve = "pants-uv-lifecycle-plugin"
+
+[python.resolves]
+pants-uv-lifecycle-plugin = "pants-uv-lifecycle-plugin.lock"
+
+
+[python.resolves_to_interpreter_constraints]
+pants-uv-lifecycle-plugin = [">=3.9"]
+
+[test]
+# Additional environment variables to include in test processes.
+extra_env_vars = [
+    "PANTS_UV_PLUGIN_PATH=%(buildroot)s/src"
+]
