@@ -11,6 +11,15 @@ backend_packages = [
 
     # This will lint, format, and test the custom plugin code
     "pants.backend.plugin_development",
+
+    # Enables autoformatting BUILD files using ruff.	
+    "pants.backend.build_files.fmt.ruff",
+
+    # Enable ruff for linting
+    "pants.backend.experimental.python.lint.ruff.check",
+
+    # Enables ruff for formatting
+    "pants.backend.experimental.python.lint.ruff.format"
    
 ]
 
@@ -37,3 +46,4 @@ pants-uv-lifecycle-plugin = [">=3.9"]
 extra_env_vars = [
     "PANTS_UV_PLUGIN_PATH=%(buildroot)s/src"
 ]
+attempts_default = 3

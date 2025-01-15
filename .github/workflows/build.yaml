@@ -1,0 +1,66 @@
+name: Build Pants uv Lifecycle Plugins
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: "Branch you want to build"
+        required: true
+        type: string
+        default: "dev"
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    - name: Install Python # use direct install rather than pyenv for CI for large speed improvement
+      uses: actions/setup-python@v5
+      with:
+          python-version: '3.9'
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v5
+    - uses: pantsbuild/actions/init-pants@v8
+      # This action bootstraps pants and manages 2-3 GHA caches.
+      # See: github.com/pantsbuild/actions/tree/main/init-pants/
+      with:
+        base-branch: dev
+        # v0 makes it easy to bust the cache if needed
+        # just increase the integer to start with a fresh cache
+        gha-cache-key: v0
+        named-caches-hash: ${{ hashFiles('pants-uv-lifecyle-plugin.lock', 'uv.lock') }}
+        cache-lmdb-store: 'true'
+    - name: Check BUILD files
+      run: |
+        pants tailor --check update-build-files --check ::
+    - name: Generate Lockfiles
+      run: |
+        pants generate-lockfiles
+    - name: Format files
+    # This is required because the linting will fail otherwise.
+      run: |
+        pants fmt ::
+    - name: Lint and typecheck
+      run: |
+        pants lint ::
+    - name: Test
+      run: |
+        pants test ::
+    - name: uv sync
+      run: |
+        pants uv-sync ::
+    - name: Package
+      run: |
+        uv build
+    - name: Publish
+      run: |
+        uv publish --publish-url https://test.pypi.org/legacy/ --token ${{ secrets.TEST_PYPI_TOKEN }}
+    - name: Upload pants log
+      uses: actions/upload-artifact@v4
+      with:
+        name: pants-log
+        path: .pants.d/workdir/pants.log
+      if: always()  # We want the log even on failures.
