@@ -13,7 +13,7 @@ To run a plugin, run `pants <name-of-goal>`.
 To run the tests within this repo, from the project root, run `pants test ::`. 
 
 ## Publish Plugin
-Currently this is done by running `uv build` and `uv publish --publish-url https://test.pypi.org/legacy/` within the CI build. 
+Currently this is done by running `pants uv-build` and `uv publish --publish-url https://test.pypi.org/legacy/` within the CI build. 
 
 ## Install the Published Plugin
 To install the published plugin, add the following to the project's `pants.toml` file.
@@ -25,3 +25,4 @@ plugins = ["pants-uv-lifecycle-plugin==<version>"]
 ```
 ## Current Available Plugins
 - `uv-sync`: Runs `uv sync` across all modules containing a `pyproject.toml` file within a pants project. 
+- `uv-build`: Runs `uv build` across all modules containing a `pyproject.toml` file within a pants project. 

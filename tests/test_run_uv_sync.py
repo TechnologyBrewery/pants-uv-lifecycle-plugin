@@ -13,6 +13,7 @@ def test_uv_run() -> None:
 
         dependencies = ["numpy>=1.9"]
         """,
+        "BUILD": "files(name='pyproject_toml_files', sources=['pyproject.toml'])",
     }
 
     # This is a limitation of the current implementation.
@@ -48,9 +49,7 @@ def test_uv_run() -> None:
         test_project_uv_lock_file = Path(tmpdir) / "uv.lock"
 
         # Assert that the `uv.lock` file exists
-        assert (
-            test_project_uv_lock_file.exists()
-        ), "uv.lock file was not created!"
+        assert test_project_uv_lock_file.exists(), "uv.lock file was not created!"
 
         build_root_marker.unlink()
 
@@ -64,6 +63,7 @@ def test_uv_run_missing_project_name() -> None:
 
         dependencies = ["numpy>=1.9"]
         """,
+        "BUILD": "files(name='pyproject_toml_files', sources=['pyproject.toml'])",
     }
 
     # This is a limitation of the current implementation.
@@ -100,9 +100,7 @@ def test_uv_run_missing_project_name() -> None:
         test_project_uv_lock_file = Path(tmpdir) / "uv.lock"
 
         # Assert that the `uv.lock` file exists
-        assert (
-            not test_project_uv_lock_file.exists()
-        ), "uv.lock file was created."
+        assert not test_project_uv_lock_file.exists(), "uv.lock file was created."
 
         build_root_marker.unlink()
 
@@ -116,6 +114,7 @@ def test_uv_run_missing_project_version() -> None:
 
         dependencies = ["numpy>=1.9"]
         """,
+        "BUILD": "files(name='pyproject_toml_files', sources=['pyproject.toml'])",
     }
 
     # This is a limitation of the current implementation.
