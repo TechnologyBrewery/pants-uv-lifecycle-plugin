@@ -1,5 +1,6 @@
 [GLOBAL]
 pants_version = "2.23.0"
+pants_ignore = [ "!*.lock" ]
 pythonpath=["%(buildroot)s/src"]
 backend_packages = [
     # This will activate `src/pants-uv-lifecycle-plugin/register.py`.
