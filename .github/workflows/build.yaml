@@ -46,15 +46,18 @@ jobs:
     - name: Lint and typecheck
       run: |
         pants lint ::
-    - name: Test
+    - name: PyTests (for uv-sync and uv-build plugins)
       run: |
         pants test ::
     - name: uv sync
       run: |
         pants uv-sync ::
-    - name: Package
+    - name: Build
       run: |
         pants uv-build ::
+    - name: Behave Tests
+      run: |
+        pants uv-run-behave
     - name: Publish
       if: github.ref == 'refs/heads/dev'
       run: |

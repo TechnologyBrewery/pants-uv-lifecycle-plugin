@@ -1,0 +1,18 @@
+[project]
+name = "example-project"
+version = "0.1.0"
+description = "A simple project to illustrate the `pants-uv-lifecycle-plugin` plugins"
+readme = "README.md"
+authors = [
+    { name = "Margaret Black", email = "black_margaret@bah.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "behave>=1.2.6",
+    "numpy>=2.0.2",
+    "pytest>=8.3.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

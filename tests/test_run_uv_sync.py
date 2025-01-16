@@ -2,7 +2,6 @@ from pants.testutil.pants_integration_test import run_pants, setup_tmpdir
 from pathlib import Path
 import os
 
-
 def test_uv_run() -> None:
     # Define the mock project structure
     sources = {

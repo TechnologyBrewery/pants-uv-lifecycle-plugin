@@ -1,6 +1,6 @@
 # Pants workspace files
 /.pants.d
-/dist/
+**/dist/
 __pycache__/
 .venv/
 .DS_Store

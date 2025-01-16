@@ -26,7 +26,7 @@ class UvSyncGoal(Goal):
 
 
 @goal_rule(desc="run `uv sync`")
-async def run_uv_sync_on_pyproject_directories(
+async def run_uv_sync_on_pyproject_modules(
     py_targets: PyprojectTomlFileTargets,
 ) -> UvSyncGoal:
     process_result_codes = []
