@@ -2,11 +2,11 @@ from pants.testutil.pants_integration_test import run_pants, setup_tmpdir
 from pathlib import Path
 import os
 
+
 def test_uv_run() -> None:
     # Define the mock project structure
     sources = {
-        "test-project/pyproject.toml":
-        """
+        "pyproject.toml": """
         [project]
         name = "test-project"
         version = "0.1.0"
@@ -25,36 +25,40 @@ def test_uv_run() -> None:
 
     # Create temporary directory with the mock project structure
     with setup_tmpdir(sources) as tmpdir:
-
         # Run the `uv-sync` Pants goal
         result = run_pants(
             [
                 f"--pythonpath={plugin_path}",
                 "--backend-packages=['pants.backend.python','pants_uv_lifecycle_plugin']",
-                 "uv-sync",
-             ]
+                "uv-sync",
+            ]
         )
 
         # Verify that the command was successful
-        result.assert_success('`uv-sync` failed to run.')
+        result.assert_success("`uv-sync` failed to run.")
 
-        test_project_venv = Path(tmpdir) / "test-project/.venv"
+        test_project_venv = Path(tmpdir) / ".venv"
 
         # Assert that the `.venv` directory exists and is a directory
-        assert test_project_venv.exists() and (test_project_venv.is_dir(), "test-project/.venv directory not created!")
+        assert test_project_venv.exists() and (
+            test_project_venv.is_dir(),
+            ".venv directory not created!",
+        )
 
-        test_project_uv_lock_file = Path(tmpdir) / "test-project/uv.lock"
+        test_project_uv_lock_file = Path(tmpdir) / "uv.lock"
 
         # Assert that the `uv.lock` file exists
-        assert test_project_uv_lock_file.exists(), "test-project/uv.lock file was not created!"
+        assert (
+            test_project_uv_lock_file.exists()
+        ), "uv.lock file was not created!"
 
         build_root_marker.unlink()
+
 
 def test_uv_run_missing_project_name() -> None:
     # Define the mock project structure
     sources = {
-        "test-project/pyproject.toml":
-        """
+        "pyproject.toml": """
         [project]
         version = "0.1.0"
 
@@ -72,25 +76,41 @@ def test_uv_run_missing_project_name() -> None:
 
     # Create temporary directory with the mock project structure
     with setup_tmpdir(sources) as tmpdir:
-
         # Run the `uv-sync` Pants goal
         result = run_pants(
             [
                 f"--pythonpath={plugin_path}",
                 "--backend-packages=['pants.backend.python','pants_uv_lifecycle_plugin']",
-                 "uv-sync",
-             ]
+                "uv-sync",
+            ]
         )
 
-        result.assert_failure("`pants uv-sync` did not fail, but it should have failed.")
+        result.assert_failure(
+            "`pants uv-sync` did not fail, but it was expected to have failed."
+        )
+
+        test_project_venv = Path(tmpdir) / ".venv"
+
+        # Assert that the `.venv` directory exists and is a directory
+        assert not test_project_venv.exists() and (
+            not test_project_venv.is_dir(),
+            ".venv directory was created.",
+        )
+
+        test_project_uv_lock_file = Path(tmpdir) / "uv.lock"
+
+        # Assert that the `uv.lock` file exists
+        assert (
+            not test_project_uv_lock_file.exists()
+        ), "uv.lock file was created."
 
         build_root_marker.unlink()
+
 
 def test_uv_run_missing_project_version() -> None:
     # Define the mock project structure
     sources = {
-        "test-project/pyproject.toml":
-        """
+        "pyproject.toml": """
         [project]
         name = "test-project"
 
@@ -108,17 +128,32 @@ def test_uv_run_missing_project_version() -> None:
 
     # Create temporary directory with the mock project structure
     with setup_tmpdir(sources) as tmpdir:
-
         # Run the `uv-sync` Pants goal
         result = run_pants(
             [
                 f"--pythonpath={plugin_path}",
                 "--backend-packages=['pants.backend.python','pants_uv_lifecycle_plugin']",
-                 "uv-sync",
-             ]
+                "uv-sync",
+            ]
         )
 
-        result.assert_failure("`pants uv-sync` did not fail, but it should have failed.")
+        result.assert_failure(
+            "`pants uv-sync` did not fail, but it was expected to have failed."
+        )
+
+        test_project_venv = Path(tmpdir) / ".venv"
+
+        # Assert that the `.venv` directory exists and is a directory
+        assert not test_project_venv.exists() and (
+            not test_project_venv.is_dir(),
+            ".venv directory was created in error.",
+        )
+
+        test_project_uv_lock_file = Path(tmpdir) / "uv.lock"
+
+        # Assert that the `uv.lock` file exists
+        assert (
+            not test_project_uv_lock_file.exists()
+        ), "uv.lock file was created in error."
 
         build_root_marker.unlink()
-
