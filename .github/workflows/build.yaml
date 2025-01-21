@@ -54,7 +54,7 @@ jobs:
         pants uv-sync ::
     - name: Package
       run: |
-        uv build
+        pants uv-build ::
     - name: Publish
       if: github.ref == 'refs/heads/dev'
       run: |
