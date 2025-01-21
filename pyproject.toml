@@ -1,6 +1,6 @@
 [project]
 name = "pants-uv-lifecycle-plugin"
-version = "0.1.7-dev7"
+version = "0.1.7-dev8"
 description = "The repository contains the Pantsbuild `uv` plugins."
 readme = "README.md"
 authors = [
