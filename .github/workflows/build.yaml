@@ -56,11 +56,11 @@ jobs:
       run: |
         uv build
     - name: Publish
-      if: github.event.inputs.buildBranch == 'dev'
+      if: github.ref == 'refs/heads/dev'
       run: |
         uv publish --publish-url https://test.pypi.org/legacy/ --token ${{ secrets.TEST_PYPI_TOKEN }}
     - name: Bump version
-      if: github.event.inputs.buildBranch == 'dev'
+      if: github.ref == 'refs/heads/dev'
       id: bump
       uses: callowayproject/bump-my-version@master
       env:
@@ -69,7 +69,7 @@ jobs:
         args: "pre_n"
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Check
-      if: steps.bump.outputs.bumped == 'true' &&  github.event.inputs.buildBranch == 'dev'
+      if: steps.bump.outputs.bumped == 'true' && github.ref == 'refs/heads/dev'
       run: |
         echo "Version was bumped from ${{ steps.bump.outputs.previous-version }} to ${{ steps.bump.outputs.current-version }}!"
     - name: Upload pants log
