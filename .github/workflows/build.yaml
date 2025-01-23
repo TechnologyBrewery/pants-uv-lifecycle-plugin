@@ -49,19 +49,19 @@ jobs:
     - name: PyTests (for uv-sync and uv-build plugins)
       run: |
         pants test ::
-    - name: uv sync
+    - name: UV Sync
       run: |
         pants uv-sync
-    - name: Build
+    - name: UV Build
       run: |
         pants uv-build
-    - name: Behave Tests
+    - name: UV Run Behave Tests
       run: |
         pants uv-run-behave
-    - name: Publish
+    - name: UV Publish
       if: github.ref == 'refs/heads/dev'
       run: |
-        uv publish --publish-url https://test.pypi.org/legacy/ --token ${{ secrets.TEST_PYPI_TOKEN }}
+        pants uv-publish --uv-publish-url=https://test.pypi.org/legacy/ --uv-publish-token=${{ secrets.TEST_PYPI_TOKEN }}
     - name: Bump version
       if: github.ref == 'refs/heads/dev'
       id: bump
