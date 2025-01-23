@@ -132,9 +132,11 @@ class FeatureFilepaths:
     def __iter__(self) -> Iterator[str]:
         return iter(self.paths)
 
+
 @rule
 async def get_feature_filepaths(
-    feature_file_targets: FeatureFileTargets) -> FeatureFilepaths:
+    feature_file_targets: FeatureFileTargets,
+) -> FeatureFilepaths:
     feature_filepaths: List[str] = []
 
     for target in feature_file_targets:
@@ -148,6 +150,7 @@ async def get_feature_filepaths(
         feature_filepaths.extend(snapshot.files)
 
     return FeatureFilepaths(paths=tuple(feature_filepaths))
+
 
 def rules():
     return collect_rules()

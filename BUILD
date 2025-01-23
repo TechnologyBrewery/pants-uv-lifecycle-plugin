@@ -16,4 +16,3 @@ files(
     description="Files target representing all behave *.feature files",
     tags=["feature-files"],
 )
-
