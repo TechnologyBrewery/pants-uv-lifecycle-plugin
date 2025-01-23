@@ -51,10 +51,10 @@ jobs:
         pants test ::
     - name: uv sync
       run: |
-        pants uv-sync ::
+        pants uv-sync
     - name: Build
       run: |
-        pants uv-build ::
+        pants uv-build
     - name: Behave Tests
       run: |
         pants uv-run-behave
