@@ -20,7 +20,6 @@ backend_packages = [
 
     # Enables ruff for formatting
     "pants.backend.experimental.python.lint.ruff.format"
-   
 ]
 
 [source]
@@ -37,7 +36,6 @@ default_resolve = "pants-uv-lifecycle-plugin"
 [python.resolves]
 pants-uv-lifecycle-plugin = "pants-uv-lifecycle-plugin.lock"
 
-
 [python.resolves_to_interpreter_constraints]
 pants-uv-lifecycle-plugin = [">=3.9"]
 
@@ -46,4 +44,3 @@ pants-uv-lifecycle-plugin = [">=3.9"]
 extra_env_vars = [
     "PANTS_UV_PLUGIN_PATH=%(buildroot)s/src"
 ]
-attempts_default = 3

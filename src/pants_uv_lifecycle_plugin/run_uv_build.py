@@ -24,7 +24,7 @@ class UvBuildGoal(Goal):
 
 
 @goal_rule(desc="run `uv build`")
-async def run_uv_build_on_pyproject_directories(
+async def run_uv_build_on_pyproject_modules(
     py_targets: PyprojectTomlFileTargets,
 ) -> UvBuildGoal:
     process_result_codes = []
