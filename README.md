@@ -1,3 +1,8 @@
+# 🗑️ ARCHIVED
+This project is no longer active.  Pants has a lot of features, but integrating `uv` outside of a `uv`-formatted `pyproject.toml` file was not 
+really feasible without major changes to how Pants is expected to work.  As such, we have reverted back to using the `mvnd` and created the 
+`[uv-monorepo-dependency-tool](https://github.com/TechnologyBrewery/uv-monorepo-dependency-tool) to pair with it.  
+
 # pants-uv-lifecycle-plugin
 
 This repository contains plugins to integrate the following `uv` commands into Pantsbuild lifecycle goals. 
